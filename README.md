@@ -25,32 +25,15 @@ The mae_pretrain_vit_b model is available [here](https://github.com/ShoufaChen/A
 
 #### Training
 Start
-```bash
-# video
-OMP_NUM_THREADS=1 python3 -m torch.distributed.launch \
-    --nproc_per_node=8 --nnodes=8 \
-    --node_rank=$1 --master_addr=$2 --master_port=22234 \
-    --use_env main_video.py \
-    --finetune /path/to/pre_trained/checkpoints \
-    --output_dir /path/to/output \
-    --batch_size 16 --epochs 90 --blr 0.1 --weight_decay 0.0 --dist_eval \
-    --data_path /path/to/SSV2 --data_set SSV2 \
-    --ffn_adapt
-```
-on each of 8 nodes. `--master_addr` is set as the ip of the node 0. and `--node_rank` is 0, 1, ..., 7 for each node.
 
 ```bash
 # image
-python3 -m torch.distributed.launch --nproc_per_node=8 --use_env main_image.py \
+python main.py \
     --batch_size 128 --cls_token \
-    --finetune /path/to/pre_trained/mae_pretrain_vit_b.pth \
-    --dist_eval --data_path /path/to/data \
-    --output_dir /path/to/output  \
-    --drop_path 0.0  --blr 0.1 \
+    --drop_path 0.0 --lr_decay 0.97 \
     --dataset cifar100 --ffn_adapt
 ```
 
-To obtain the pre-trained checkpoint, see [PRETRAIN.md](PRETRAIN.md).
 ### Acknowledgement
 
 The project is based on [MAE](https://github.com/facebookresearch/mae) and [AdaptFormer](https://github.com/ShoufaChen/AdaptFormer).
