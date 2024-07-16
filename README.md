@@ -27,11 +27,8 @@ The mae_pretrain_vit_b model is available [here](https://github.com/ShoufaChen/A
 Start
 
 ```bash
-# image
-python main.py \
-    --batch_size 128 --cls_token \
-    --drop_path 0.0 --lr_decay 0.97 \
-    --dataset cifar100 --ffn_adapt
+python main.py  --batch_size 128 --cls_token  --drop_path 0.0 --lr_decay 0.97 \
+   --dataset cifar100 --ffn_adapt
 ```
 
 ### Acknowledgement
