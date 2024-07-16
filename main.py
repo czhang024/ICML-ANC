@@ -93,12 +93,13 @@ def get_args_parser():
 
     parser.add_argument('--inception', default=False, action='store_true', help='whether use INCPETION mean and std'
                                                                                 '(for Jx provided IN-21K pretrain')
-    # AdaptFormer related parameters
+    #model related parameters --> use a similar way as AdaptFormer
     parser.add_argument('--ffn_adapt', default=False, action='store_true', help='whether activate AdaptFormer')
     parser.add_argument('--ffn_num', default=64, type=int, help='bottleneck middle dimension')
     parser.add_argument('--vpt', default=False, action='store_true', help='whether activate VPT')
     parser.add_argument('--vpt_num', default=1, type=int, help='number of VPT prompts')
     parser.add_argument('--fulltune', default=False, action='store_true', help='full finetune model')
+    parser.add_argument('--stable_mode', default=False, action='store_true', help='Whether to use stable mode: put normalization before control')
     return parser
 
 
@@ -155,6 +156,7 @@ def main(args):
             ffn_adapter_scalar="0.1",
             ffn_num=args.ffn_num,
             d_model=768,
+            stable_mode=args.stable_mode,
             # VPT related
             vpt_on=args.vpt,
             vpt_num=args.vpt_num,

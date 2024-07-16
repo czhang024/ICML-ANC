@@ -74,7 +74,10 @@ class Block(nn.Module):
         x = residual1 + x 
         
         residual2 = x
-        control = self.controller(x) ### propotional control
+        if not self.config.stable_mode:
+            control = self.controller(x) ### propotional control
+        else:
+            control = self.controller(self.norm2(x))
         x = self.mlp_drop(self.act(self.fc1(self.norm2(x))))  
         x = self.drop_path(self.mlp_drop(self.fc2(x)))  # mlp(x)
         x = residual2 + x  +  control  
